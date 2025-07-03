@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
-import { LoadingView } from '../components/LoadingView';
-import { ErrorView } from '../components/ErrorView';
-import { UserDetailHeader } from '../components/UserDetailHeader';
-import { UserProfile } from '../components/UserProfile';
-import { UserStats } from '../components/UserStats';
-import { UserDetails } from '../components/UserDetails';
+import { LoadingView } from '../components/common/LoadingView';
+import { ErrorView } from '../components/common/ErrorView';
+import { UserDetailHeader } from '../components/user/UserDetailHeader';
+import { UserProfile } from '../components/user/UserProfile';
+import { UserStats } from '../components/user/UserStats';
+import { UserDetails } from '../components/user/UserDetails';
 import { useUserDetailLogic } from '../hooks/useUserDetailLogic';
 
 export const UserDetailScreen: FC = () => {

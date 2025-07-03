@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { HomeScreen } from './HomeScreen';
 import { FavoritesScreen } from './FavoritesScreen';
-import { TabNavigator } from '../components/TabNavigator';
+import { TabNavigator } from '../components/navigation/TabNavigator';
 import { useTheme } from '../contexts/ThemeContext';
 
 type TabType = 'home' | 'favorites';

@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../contexts/ThemeContext';
-import { GitHubUser } from '../types';
-import { useFavorites } from '../contexts/FavoritesContext';
+import { useTheme } from '../../contexts/ThemeContext';
+import { GitHubUser } from '../../types';
+import { useFavorites } from '../../contexts/FavoritesContext';
 
 interface UserCardProps {
   user: GitHubUser;

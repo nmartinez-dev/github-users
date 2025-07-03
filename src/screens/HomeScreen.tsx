@@ -8,14 +8,14 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useUsers, useSearchUsers } from '../hooks/useGitHubUsers';
-import { UserCard } from '../components/UserCard';
-import { SearchBar } from '../components/SearchBar';
-import { LoadingView } from '../components/LoadingView';
-import { ErrorView } from '../components/ErrorView';
-import { EmptyView } from '../components/EmptyView';
+import { UserCard } from '../components/user/UserCard';
+import { SearchBar } from '../components/common/SearchBar';
+import { LoadingView } from '../components/common/LoadingView';
+import { ErrorView } from '../components/common/ErrorView';
+import { EmptyView } from '../components/common/EmptyView';
 import { GitHubUser } from '../types';
 import { useTheme } from '../contexts/ThemeContext';
-import { ThemeToggle } from '../components/ThemeToggle';
+import { ThemeToggle } from '../components/common/ThemeToggle';
 
 type RootStackParamList = {
   Home: undefined;

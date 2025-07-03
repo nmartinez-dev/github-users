@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { UserCard } from './UserCard';
-import { GitHubUser } from '../types';
+import { UserCard } from '../user/UserCard';
+import { GitHubUser } from '../../types';
 
 interface FavoritesListProps {
   users: GitHubUser[];

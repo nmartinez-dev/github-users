@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
-import { GitHubUser } from '../types';
+import { useTheme } from '../../contexts/ThemeContext';
+import { GitHubUser } from '../../types';
 
 interface UserStatsProps {
   user: GitHubUser;

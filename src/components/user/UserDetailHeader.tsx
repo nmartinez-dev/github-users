@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useTheme } from '../contexts/ThemeContext';
-import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '../../contexts/ThemeContext';
+import { ThemeToggle } from '../common/ThemeToggle';
 
 interface UserDetailHeaderProps {
   onBackPress: () => void;

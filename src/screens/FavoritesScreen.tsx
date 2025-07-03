@@ -6,10 +6,10 @@ import {
   StatusBar,
 } from 'react-native';
 import { useFavorites } from '../contexts/FavoritesContext';
-import { EmptyView } from '../components/EmptyView';
+import { EmptyView } from '../components/common/EmptyView';
 import { useTheme } from '../contexts/ThemeContext';
-import { FavoritesHeader } from '../components/FavoritesHeader';
-import { FavoritesList } from '../components/FavoritesList';
+import { FavoritesHeader } from '../components/favorites/FavoritesHeader';
+import { FavoritesList } from '../components/favorites/FavoritesList';
 import { useFavoritesLogic } from '../hooks/useFavoritesLogic';
 
 export const FavoritesScreen: FC = () => {

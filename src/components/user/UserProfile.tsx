@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '../contexts/ThemeContext';
-import { GitHubUser } from '../types';
+import { useTheme } from '../../contexts/ThemeContext';
+import { GitHubUser } from '../../types';
 
 interface UserProfileProps {
   user: GitHubUser;
