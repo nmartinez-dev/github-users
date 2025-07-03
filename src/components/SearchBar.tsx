@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -18,6 +19,7 @@ export const SearchBar: FC<SearchBarProps> = ({
   placeholder = 'Buscar usuarios...',
   debounceMs = 500,
 }) => {
+  const { theme } = useTheme();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
 
@@ -38,14 +40,14 @@ export const SearchBar: FC<SearchBarProps> = ({
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <View style={[styles.searchContainer, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { color: theme.colors.text }]}
           value={query}
           onChangeText={setQuery}
           placeholder={placeholder}
-          placeholderTextColor="#6a737d"
+          placeholderTextColor={theme.colors.textMuted}
           autoCapitalize="none"
           autoCorrect={false}
           returnKeyType="search"
@@ -56,7 +58,7 @@ export const SearchBar: FC<SearchBarProps> = ({
             onPress={handleClear}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           >
-            <Ionicons name="close" size={16} color="#6a737d" />
+            <Ionicons name="close" size={16} color={theme.colors.icon} />
           </TouchableOpacity>
         )}
       </View>
@@ -66,16 +68,14 @@ export const SearchBar: FC<SearchBarProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#f6f8fa',
+    paddingVertical: 8,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
     borderRadius: 8,
     paddingHorizontal: 12,
+    borderWidth: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 44,
     fontSize: 16,
-    color: '#24292e',
   },
   clearButton: {
     padding: 8,

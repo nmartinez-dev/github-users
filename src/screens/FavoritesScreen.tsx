@@ -14,6 +14,8 @@ import { UserCard } from '../components/UserCard';
 import { EmptyView } from '../components/LoadingAndError';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { GitHubUser } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 type RootStackParamList = {
   Favorites: undefined;
@@ -25,6 +27,7 @@ type NavigationProp = {
 };
 
 export const FavoritesScreen: FC = () => {
+  const { theme } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
   const { favorites } = useFavorites();
@@ -58,18 +61,25 @@ export const FavoritesScreen: FC = () => {
   );
 
   const renderHeader = () => (
-    <View style={styles.header}>
-      <Text style={styles.title}>Favoritos ({favoriteUsers.length})</Text>
-      {favoriteUsers.length > 1 && (
-        <TouchableOpacity
-          style={styles.sortButton}
-          onPress={toggleSortOrder}
-        >
-          <Text style={styles.sortButtonText}>
-            Ordenar {sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
-          </Text>
-        </TouchableOpacity>
-      )}
+    <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
+      <View style={styles.headerContent}>
+        <View style={styles.headerLeft}>
+          <Text style={[styles.title, { color: theme.colors.text }]}>Favoritos ({favoriteUsers.length})</Text>
+        </View>
+        <View style={styles.headerRight}>
+          {favoriteUsers.length > 1 && (
+            <TouchableOpacity
+              style={[styles.sortButton, { backgroundColor: theme.colors.primary }]}
+              onPress={toggleSortOrder}
+            >
+              <Text style={styles.sortButtonText}>
+                Ordenar {sortOrder === 'asc' ? 'A-Z' : 'Z-A'}
+              </Text>
+            </TouchableOpacity>
+          )}
+          <ThemeToggle />
+        </View>
+      </View>
     </View>
   );
 
@@ -114,8 +124,11 @@ export const FavoritesScreen: FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f6f8fa" />
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <StatusBar 
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
+        backgroundColor={theme.colors.background} 
+      />
       <View style={styles.content}>
         {renderContent()}
       </View>
@@ -126,28 +139,33 @@ export const FavoritesScreen: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f8fa',
   },
   content: {
     flex: 1,
   },
   header: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+  },
+  headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e1e4e8',
+  },
+  headerLeft: {
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#24292e',
   },
   sortButton: {
-    backgroundColor: '#0366d6',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,

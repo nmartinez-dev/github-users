@@ -6,6 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../contexts/ThemeContext';
 
 type TabType = 'home' | 'favorites';
 
@@ -18,39 +19,43 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
   activeTab,
   onTabPress,
 }) => {
+  const { theme } = useTheme();
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.surface, borderTopColor: theme.colors.border }]}>
       <TouchableOpacity
-        style={[styles.tab, activeTab === 'home' && styles.activeTab]}
+        style={[styles.tab, activeTab === 'home' && { borderTopColor: theme.colors.primary }]}
         onPress={() => onTabPress('home')}
         activeOpacity={0.7}
       >
         <Ionicons
           name="home"
           size={24}
-          color={activeTab === 'home' ? '#0366d6' : '#586069'}
+          color={activeTab === 'home' ? theme.colors.primary : theme.colors.icon}
         />
         <Text style={[
           styles.tabText,
-          activeTab === 'home' && styles.activeTabText
+          { color: theme.colors.textSecondary },
+          activeTab === 'home' && { color: theme.colors.primary }
         ]}>
           Inicio
         </Text>
       </TouchableOpacity>
-
+      
       <TouchableOpacity
-        style={[styles.tab, activeTab === 'favorites' && styles.activeTab]}
+        style={[styles.tab, activeTab === 'favorites' && { borderTopColor: theme.colors.primary }]}
         onPress={() => onTabPress('favorites')}
         activeOpacity={0.7}
       >
         <Ionicons
           name="star"
           size={24}
-          color={activeTab === 'favorites' ? '#0366d6' : '#586069'}
+          color={activeTab === 'favorites' ? theme.colors.primary : theme.colors.icon}
         />
         <Text style={[
           styles.tabText,
-          activeTab === 'favorites' && styles.activeTabText
+          { color: theme.colors.textSecondary },
+          activeTab === 'favorites' && { color: theme.colors.primary }
         ]}>
           Favoritos
         </Text>
@@ -62,9 +67,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
     borderTopWidth: 1,
-    borderTopColor: '#e1e4e8',
     paddingBottom: 20,
   },
   tab: {
@@ -72,17 +75,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 16,
-  },
-  activeTab: {
     borderTopWidth: 2,
-    borderTopColor: '#0366d6',
+    borderTopColor: 'transparent',
   },
   tabText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#586069',
-  },
-  activeTabText: {
-    color: '#0366d6',
   },
 });

@@ -10,10 +10,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../contexts/ThemeContext';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { useUserDetails } from '../hooks/useGitHubUsers';
 import { LoadingView, ErrorView } from '../components/LoadingAndError';
 import { useFavorites } from '../contexts/FavoritesContext';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 type RootStackParamList = {
   UserDetail: { username: string };
@@ -25,6 +27,7 @@ type NavigationProp = {
 };
 
 export const UserDetailScreen: FC = () => {
+  const { theme } = useTheme();
   const route = useRoute<UserDetailRouteProp>();
 
   const navigation = useNavigation<NavigationProp>();
@@ -63,12 +66,12 @@ export const UserDetailScreen: FC = () => {
             resizeMode="cover"
           />
           <View style={styles.userInfo}>
-            <Text style={styles.username}>{user.login}</Text>
+            <Text style={[styles.username, { color: theme.colors.text }]}>{user.login}</Text>
             {user.name && (
-              <Text style={styles.name}>{user.name}</Text>
+              <Text style={[styles.name, { color: theme.colors.textSecondary }]}>{user.name}</Text>
             )}
             {user.bio && (
-              <Text style={styles.bio}>{user.bio}</Text>
+              <Text style={[styles.bio, { color: theme.colors.textMuted }]}>{user.bio}</Text>
             )}
           </View>
           <TouchableOpacity
@@ -79,23 +82,23 @@ export const UserDetailScreen: FC = () => {
             <Ionicons
               name={isFavorite(user.login) ? 'star' : 'star-outline'}
               size={32}
-              color={isFavorite(user.login) ? '#f6e05e' : '#d1d5da'}
+              color={isFavorite(user.login) ? theme.colors.favorite : theme.colors.favoriteInactive}
             />
           </TouchableOpacity>
         </View>
 
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{user.public_repos || 0}</Text>
-            <Text style={styles.statLabel}>Repositorios</Text>
+            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{user.public_repos || 0}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Repositorios</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{user.followers || 0}</Text>
-            <Text style={styles.statLabel}>Seguidores</Text>
+            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{user.followers || 0}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Seguidores</Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{user.following || 0}</Text>
-            <Text style={styles.statLabel}>Siguiendo</Text>
+            <Text style={[styles.statNumber, { color: theme.colors.text }]}>{user.following || 0}</Text>
+            <Text style={[styles.statLabel, { color: theme.colors.textSecondary }]}>Siguiendo</Text>
           </View>
         </View>
 
@@ -103,47 +106,47 @@ export const UserDetailScreen: FC = () => {
           {user.location && (
             <View style={styles.detailItem}>
               <View style={styles.detailHeader}>
-                <Ionicons name="location" size={16} color="#586069" />
-                <Text style={styles.detailLabel}>Ubicación</Text>
+                <Ionicons name="location" size={16} color={theme.colors.icon} />
+                <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Ubicación</Text>
               </View>
-              <Text style={styles.detailValue}>{user.location}</Text>
+              <Text style={[styles.detailValue, { color: theme.colors.text }]}>{user.location}</Text>
             </View>
           )}
 
           {user.company && (
             <View style={styles.detailItem}>
               <View style={styles.detailHeader}>
-                <Ionicons name="business" size={16} color="#586069" />
-                <Text style={styles.detailLabel}>Empresa</Text>
+                <Ionicons name="business" size={16} color={theme.colors.icon} />
+                <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Empresa</Text>
               </View>
-              <Text style={styles.detailValue}>{user.company}</Text>
+              <Text style={[styles.detailValue, { color: theme.colors.text }]}>{user.company}</Text>
             </View>
           )}
 
           {user.blog && (
             <View style={styles.detailItem}>
               <View style={styles.detailHeader}>
-                <Ionicons name="globe" size={16} color="#586069" />
-                <Text style={styles.detailLabel}>Blog</Text>
+                <Ionicons name="globe" size={16} color={theme.colors.icon} />
+                <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Blog</Text>
               </View>
-              <Text style={styles.detailValue}>{user.blog}</Text>
+              <Text style={[styles.detailValue, { color: theme.colors.text }]}>{user.blog}</Text>
             </View>
           )}
 
           <View style={styles.detailItem}>
             <View style={styles.detailHeader}>
-              <Ionicons name="calendar" size={16} color="#586069" />
-              <Text style={styles.detailLabel}>Miembro desde</Text>
+              <Ionicons name="calendar" size={16} color={theme.colors.icon} />
+              <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Miembro desde</Text>
             </View>
-            <Text style={styles.detailValue}>{formatDate(user.created_at)}</Text>
+            <Text style={[styles.detailValue, { color: theme.colors.text }]}>{formatDate(user.created_at)}</Text>
           </View>
 
           <View style={styles.detailItem}>
             <View style={styles.detailHeader}>
-              <Ionicons name="refresh" size={16} color="#586069" />
-              <Text style={styles.detailLabel}>Última actualización</Text>
+              <Ionicons name="refresh" size={16} color={theme.colors.icon} />
+              <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Última actualización</Text>
             </View>
-            <Text style={styles.detailValue}>{formatDate(user.updated_at)}</Text>
+            <Text style={[styles.detailValue, { color: theme.colors.text }]}>{formatDate(user.updated_at)}</Text>
           </View>
         </View>
       </ScrollView>
@@ -168,18 +171,23 @@ export const UserDetailScreen: FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      <View style={styles.headerContainer}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background }]}>
+      <StatusBar 
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
+        backgroundColor={theme.colors.background} 
+      />
+      <View style={[styles.headerContainer, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={handleBackPress}
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
-          <Text style={styles.backButtonText}>← Volver</Text>
+          <Text style={[styles.backButtonText, { color: theme.colors.primary }]}>← Volver</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Detalles del Usuario</Text>
-        <View style={styles.headerSpacer} />
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>Detalles del Usuario</Text>
+        <View style={styles.headerRight}>
+          <ThemeToggle />
+        </View>
       </View>
       {renderContent()}
     </SafeAreaView>
@@ -189,7 +197,6 @@ export const UserDetailScreen: FC = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#ffffff',
   },
   headerContainer: {
     flexDirection: 'row',
@@ -197,25 +204,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#e1e4e8',
   },
   backButton: {
     padding: 8,
   },
   backButtonText: {
     fontSize: 16,
-    color: '#0366d6',
     fontWeight: '600',
   },
   headerTitle: {
     flex: 1,
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#24292e',
     textAlign: 'center',
   },
-  headerSpacer: {
-    width: 60,
+  headerRight: {
+    width: 40,
+    alignItems: 'flex-end',
   },
   container: {
     flex: 1,
@@ -238,17 +243,14 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#24292e',
     marginBottom: 4,
   },
   name: {
     fontSize: 18,
-    color: '#586069',
     marginBottom: 8,
   },
   bio: {
     fontSize: 14,
-    color: '#6a737d',
     lineHeight: 20,
   },
   favoriteButton: {
@@ -259,9 +261,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: 20,
     borderTopWidth: 1,
-    borderTopColor: '#e1e4e8',
     borderBottomWidth: 1,
-    borderBottomColor: '#e1e4e8',
     marginHorizontal: 20,
   },
   statItem: {
@@ -270,11 +270,9 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#24292e',
   },
   statLabel: {
     fontSize: 12,
-    color: '#586069',
     marginTop: 4,
   },
   detailsContainer: {
@@ -286,12 +284,10 @@ const styles = StyleSheet.create({
   detailLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#586069',
     marginLeft: 8,
   },
   detailValue: {
     fontSize: 16,
-    color: '#24292e',
     marginTop: 4,
   },
   detailHeader: {

@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FavoritesProvider } from './src/contexts/FavoritesContext';
+import { ThemeProvider } from './src/contexts/ThemeContext';
 import { MainScreen } from './src/screens/MainScreen';
 import { UserDetailScreen } from './src/screens/UserDetailScreen';
 
@@ -20,25 +21,27 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <FavoritesProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Main"
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="Main" component={MainScreen} />
-            <Stack.Screen
-              name="UserDetail"
-              component={UserDetailScreen}
-              options={{
+      <ThemeProvider>
+        <FavoritesProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Main"
+              screenOptions={{
                 headerShown: false,
               }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </FavoritesProvider>
+            >
+              <Stack.Screen name="Main" component={MainScreen} />
+              <Stack.Screen
+                name="UserDetail"
+                component={UserDetailScreen}
+                options={{
+                  headerShown: false,
+                }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FavoritesProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

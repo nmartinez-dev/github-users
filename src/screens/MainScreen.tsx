@@ -8,10 +8,12 @@ import {
 import { HomeScreen } from './HomeScreen';
 import { FavoritesScreen } from './FavoritesScreen';
 import { TabNavigator } from '../components/TabNavigator';
+import { useTheme } from '../contexts/ThemeContext';
 
 type TabType = 'home' | 'favorites';
 
 export const MainScreen: FC = () => {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState<TabType>('home');
 
   const handleTabPress = (tab: TabType) => {
@@ -30,8 +32,11 @@ export const MainScreen: FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f6f8fa" />
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <StatusBar 
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
+        backgroundColor={theme.colors.background} 
+      />
       <View style={styles.content}>
         {renderContent()}
       </View>
@@ -46,7 +51,6 @@ export const MainScreen: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f8fa',
   },
   content: {
     flex: 1,

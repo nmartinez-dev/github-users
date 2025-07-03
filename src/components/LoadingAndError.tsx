@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface LoadingViewProps {
   message?: string;
@@ -15,10 +16,12 @@ interface LoadingViewProps {
 export const LoadingView: FC<LoadingViewProps> = ({
   message = 'Cargando...',
 }) => {
+  const { theme } = useTheme();
+  
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#0366d6" />
-      <Text style={styles.message}>{message}</Text>
+      <ActivityIndicator size="large" color={theme.colors.primary} />
+      <Text style={[styles.message, { color: theme.colors.textSecondary }]}>{message}</Text>
     </View>
   );
 };
@@ -32,12 +35,14 @@ export const ErrorView: FC<ErrorViewProps> = ({
   message,
   onRetry,
 }) => {
+  const { theme } = useTheme();
+  
   return (
     <View style={styles.container}>
-      <Ionicons name="warning" size={48} color="#d73a49" />
-      <Text style={styles.errorMessage}>{message}</Text>
+      <Ionicons name="warning" size={48} color={theme.colors.error} />
+      <Text style={[styles.errorMessage, { color: theme.colors.error }]}>{message}</Text>
       {onRetry && (
-        <TouchableOpacity style={styles.retryButton} onPress={onRetry}>
+        <TouchableOpacity style={[styles.retryButton, { backgroundColor: theme.colors.primary }]} onPress={onRetry}>
           <Text style={styles.retryText}>Reintentar</Text>
         </TouchableOpacity>
       )}
@@ -52,10 +57,12 @@ interface EmptyViewProps {
 export const EmptyView: FC<EmptyViewProps> = ({
   message,
 }) => {
+  const { theme } = useTheme();
+  
   return (
     <View style={styles.container}>
-      <Ionicons name="search" size={48} color="#586069" />
-      <Text style={styles.emptyMessage}>{message}</Text>
+      <Ionicons name="search" size={48} color={theme.colors.icon} />
+      <Text style={[styles.emptyMessage, { color: theme.colors.textSecondary }]}>{message}</Text>
     </View>
   );
 };
@@ -70,17 +77,14 @@ const styles = StyleSheet.create({
   message: {
     marginTop: 12,
     fontSize: 16,
-    color: '#586069',
     textAlign: 'center',
   },
   errorMessage: {
     fontSize: 16,
-    color: '#d73a49',
     textAlign: 'center',
     marginBottom: 16,
   },
   retryButton: {
-    backgroundColor: '#0366d6',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 6,
@@ -92,7 +96,6 @@ const styles = StyleSheet.create({
   },
   emptyMessage: {
     fontSize: 16,
-    color: '#586069',
     textAlign: 'center',
   },
 });

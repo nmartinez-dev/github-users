@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../contexts/ThemeContext';
 import { GitHubUser } from '../types';
 import { useFavorites } from '../contexts/FavoritesContext';
 
@@ -21,6 +22,7 @@ export const UserCard: FC<UserCardProps> = ({
   onPress,
   showFavoriteButton = true,
 }) => {
+  const { theme } = useTheme();
   const { isFavorite, toggleFavorite } = useFavorites();
 
   const handleFavoritePress = () =>
@@ -28,7 +30,7 @@ export const UserCard: FC<UserCardProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[styles.container, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
       onPress={onPress}
       activeOpacity={0.7}
     >
@@ -39,16 +41,16 @@ export const UserCard: FC<UserCardProps> = ({
           resizeMode="cover"
         />
         <View style={styles.userInfo}>
-          <Text style={styles.username} numberOfLines={1}>
+          <Text style={[styles.username, { color: theme.colors.text }]} numberOfLines={1}>
             {user.login}
           </Text>
           {user.name && (
-            <Text style={styles.name} numberOfLines={1}>
+            <Text style={[styles.name, { color: theme.colors.textSecondary }]} numberOfLines={1}>
               {user.name}
             </Text>
           )}
           {user.bio && (
-            <Text style={styles.bio} numberOfLines={2}>
+            <Text style={[styles.bio, { color: theme.colors.textMuted }]} numberOfLines={2}>
               {user.bio}
             </Text>
           )}
@@ -63,7 +65,7 @@ export const UserCard: FC<UserCardProps> = ({
             <Ionicons
               name={isFavorite(user.login) ? 'star' : 'star-outline'}
               size={24}
-              color={isFavorite(user.login) ? '#f6e05e' : '#d1d5da'}
+              color={isFavorite(user.login) ? theme.colors.favorite : theme.colors.favoriteInactive}
             />
           </TouchableOpacity>
         )}
@@ -74,11 +76,11 @@ export const UserCard: FC<UserCardProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
     borderRadius: 12,
     marginHorizontal: 16,
     marginVertical: 6,
     padding: 16,
+    borderWidth: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -105,17 +107,14 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#24292e',
     marginBottom: 2,
   },
   name: {
     fontSize: 14,
-    color: '#586069',
     marginBottom: 4,
   },
   bio: {
     fontSize: 12,
-    color: '#6a737d',
     lineHeight: 16,
   },
   favoriteButton: {

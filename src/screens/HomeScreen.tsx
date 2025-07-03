@@ -12,6 +12,8 @@ import { UserCard } from '../components/UserCard';
 import { SearchBar } from '../components/SearchBar';
 import { LoadingView, ErrorView, EmptyView } from '../components/LoadingAndError';
 import { GitHubUser } from '../types';
+import { useTheme } from '../contexts/ThemeContext';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 type RootStackParamList = {
   Home: undefined;
@@ -23,6 +25,7 @@ type NavigationProp = {
 };
 
 export const HomeScreen: FC = () => {
+  const { theme } = useTheme();
   const navigation = useNavigation<NavigationProp>();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -88,9 +91,22 @@ export const HomeScreen: FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f6f8fa" />
-      <SearchBar onSearch={handleSearch} />
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <StatusBar 
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
+        backgroundColor={theme.colors.background} 
+      />
+      <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
+        <View style={styles.headerContent}>
+          <View style={styles.headerLeft} />
+          <View style={styles.headerCenter}>
+            <SearchBar onSearch={handleSearch} />
+          </View>
+          <View style={styles.headerRight}>
+            <ThemeToggle />
+          </View>
+        </View>
+      </View>
       <View style={styles.content}>
         {renderContent()}
       </View>
@@ -101,7 +117,25 @@ export const HomeScreen: FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f6f8fa',
+  },
+  header: {
+    borderBottomWidth: 1,
+    paddingVertical: 8,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  headerLeft: {
+    width: 40,
+  },
+  headerCenter: {
+    flex: 1,
+  },
+  headerRight: {
+    width: 40,
+    alignItems: 'flex-end',
   },
   content: {
     flex: 1,
