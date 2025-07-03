@@ -21,11 +21,6 @@ export interface SearchResponse {
   items: GitHubUser[];
 }
 
-export interface ApiError {
-  message: string;
-  documentation_url?: string;
-}
-
 export interface FavoritesContextType {
   favorites: string[];
   addFavorite: (username: string) => void;
