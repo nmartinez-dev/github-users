@@ -1,5 +1,28 @@
 import '@testing-library/jest-native/extend-expect';
 
+jest.mock('react-native', () => ({
+  View: 'View',
+  Text: 'Text',
+  TouchableOpacity: 'TouchableOpacity',
+  FlatList: 'FlatList',
+  Image: 'Image',
+  StyleSheet: {
+    create: (styles) => styles,
+  },
+  Dimensions: {
+    get: () => ({ width: 375, height: 667 }),
+  },
+  Platform: {
+    OS: 'ios',
+  },
+  Alert: {
+    alert: jest.fn(),
+  },
+  Linking: {
+    openURL: jest.fn(),
+  },
+}));
+
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock')
 );
