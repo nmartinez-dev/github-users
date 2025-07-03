@@ -77,7 +77,9 @@ export const FavoritesScreen: FC = () => {
               </Text>
             </TouchableOpacity>
           )}
-          <ThemeToggle />
+          <View style={styles.themeToggle}>
+            <ThemeToggle />
+          </View>
         </View>
       </View>
     </View>
@@ -125,9 +127,9 @@ export const FavoritesScreen: FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <StatusBar 
-        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
-        backgroundColor={theme.colors.background} 
+      <StatusBar
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'}
+        backgroundColor={theme.colors.background}
       />
       <View style={styles.content}>
         {renderContent()}
@@ -160,6 +162,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  themeToggle: {
+    marginLeft: 16,
   },
   title: {
     fontSize: 18,
