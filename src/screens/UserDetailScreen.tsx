@@ -14,7 +14,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import { useUserDetails } from '../hooks/useGitHubUsers';
-import { LoadingView, ErrorView } from '../components/LoadingAndError';
+import { LoadingView } from '../components/LoadingView';
+import { ErrorView } from '../components/ErrorView';
 import { useFavorites } from '../contexts/FavoritesContext';
 import { ThemeToggle } from '../components/ThemeToggle';
 
