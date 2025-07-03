@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
@@ -129,7 +130,7 @@ export const UserDetailScreen: FC = () => {
                 <Ionicons name="globe" size={16} color={theme.colors.icon} />
                 <Text style={[styles.detailLabel, { color: theme.colors.textSecondary }]}>Blog</Text>
               </View>
-              <Text style={[styles.detailValue, { color: theme.colors.text }]}>{user.blog}</Text>
+              <Text style={[styles.detailValue, { color: theme.colors.text }]} onPress={() => user.blog && Linking.openURL(user.blog)}>{user.blog}</Text>
             </View>
           )}
 
