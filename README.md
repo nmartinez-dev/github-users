@@ -12,6 +12,7 @@ Una aplicación móvil desarrollada con React Native que permite explorar usuari
 - **Diseño Responsivo**: Interfaz adaptada para diferentes tamaños de pantalla
 - **Gestión de Estado**: Context API para favoritos y React Query para datos
 - **Manejo de Errores**: Estados de carga, error y vacío bien definidos
+- **Sistema de Temas**: Soporte para tema claro y oscuro
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -80,10 +81,13 @@ src/
 ├── components/          # Componentes reutilizables
 │   ├── UserCard.tsx     # Tarjeta de usuario
 │   ├── SearchBar.tsx    # Barra de búsqueda
-│   ├── TabNavigator.tsx # Navegación por tabs
-│   └── LoadingAndError.tsx # Estados de carga y error
+│   ├── TabNavigator.tsx # Navegación por pestañas
+│   ├── ThemeToggle.tsx  # Toggle de tema
+│   ├── LoadingView.tsx  # Vista de carga
+│   ├── ErrorView.tsx    # Vista de error
+│   └── EmptyView.tsx    # Vista vacía
 ├── screens/             # Pantallas de la aplicación
-│   ├── MainScreen.tsx   # Pantalla principal con tabs
+│   ├── MainScreen.tsx   # Pantalla principal con pestañas
 │   ├── HomeScreen.tsx   # Lista de usuarios
 │   ├── UserDetailScreen.tsx # Detalles del usuario
 │   └── FavoritesScreen.tsx # Lista de favoritos
@@ -92,7 +96,8 @@ src/
 ├── hooks/               # Hooks personalizados
 │   └── useGitHubUsers.ts # Hooks para consultas de usuarios
 ├── contexts/            # Contextos de React
-│   └── FavoritesContext.tsx # Contexto de favoritos
+│   ├── FavoritesContext.tsx # Contexto de favoritos
+│   └── ThemeContext.tsx     # Contexto de tema
 ├── types/               # Definiciones de tipos TypeScript
 │   └── index.ts         # Interfaces y tipos
 ├── utils/               # Utilidades
@@ -118,14 +123,22 @@ src/
   - Integración nativa con React
   - Persistencia con AsyncStorage
 
+#### Context API para Tema
+- **Decisión**: Context API separado para gestión de tema
+- **Razón**:
+  - Estado simple (claro/oscuro)
+  - Persistencia automática
+  - Acceso global al tema
+  - Fácil implementación
+
 #### React Query para Datos del Servidor
 - **Decisión**: Usar @tanstack/react-query
 - **Razón**:
   - Cache automático
-  - Estados de loading/error
+  - Estados de carga/error
   - Revalidación automática
-  - Optimistic updates
-  - Background refetching
+  - Actualizaciones optimistas
+  - Refetch en segundo plano
 
 ### 3. Navegación
 
@@ -133,7 +146,7 @@ src/
 - **Decisión**: Usar React Navigation Native Stack
 - **Razón**:
   - Navegación nativa
-  - Performance optimizada
+  - Rendimiento optimizado
   - Soporte para TypeScript
   - Integración con Expo
 
@@ -143,41 +156,41 @@ src/
 - **Decisión**: Configuración estricta de TypeScript
 - **Razón**:
   - Detección temprana de errores
-  - Mejor DX con autocompletado
+  - Mejor experiencia de desarrollo con autocompletado
   - Documentación del código
   - Refactoring seguro
 
-## 🎨 UI/UX Decisions
+## 🎨 Decisiones de UI/UX
 
 ### 1. Diseño de Componentes
 
 #### UserCard
 - **Decisión**: Componente reutilizable con props opcionales
 - **Razón**:
-  - DRY principle
+  - Principio DRY
   - Consistencia visual
   - Fácil mantenimiento
 
 #### SearchBar con Debounce
 - **Decisión**: Debounce de 500ms
 - **Razón**:
-  - Evita requests excesivos
-  - Mejor UX (no spam de requests)
-  - Optimización de performance
+  - Evita peticiones excesivas
+  - Mejor experiencia de usuario (no spam de peticiones)
+  - Optimización de rendimiento
 
 ### 2. Estados de UI
 
-#### Loading States
+#### Estados de Carga
 - **Decisión**: Componentes específicos para cada estado
 - **Razón**:
   - Feedback claro al usuario
-  - Consistencia en toda la app
+  - Consistencia en toda la aplicación
   - Fácil reutilización
 
-#### Error Handling
+#### Manejo de Errores
 - **Decisión**: Manejo centralizado de errores
 - **Razón**:
-  - UX consistente
+  - Experiencia de usuario consistente
   - Opción de reintentar
   - Mensajes claros
 
@@ -186,12 +199,20 @@ src/
 - **Razón**:
   - Consistencia visual profesional
   - Escalabilidad y mantenimiento
-  - Mejor performance (vectoriales)
+  - Mejor rendimiento (vectoriales)
   - Soporte para accesibilidad
 
-## 🚀 Performance Decisions
+### 4. Sistema de Temas
+- **Decisión**: Implementar tema claro y oscuro
+- **Razón**:
+  - Mejor experiencia de usuario
+  - Accesibilidad mejorada
+  - Preferencias del usuario
+  - Consistencia visual
 
-### 1. FlatList Optimization
+## 🚀 Decisiones de Rendimiento
+
+### 1. Optimización de FlatList
 ```typescript
 initialNumToRender={10}
 maxToRenderPerBatch={10}
@@ -199,14 +220,14 @@ windowSize={10}
 ```
 - **Razón**: Renderizado eficiente para listas grandes
 
-### 2. React Query Configuration
+### 2. Configuración de React Query
 ```typescript
 staleTime: 5 * 60 * 1000, // 5 minutos
 gcTime: 10 * 60 * 1000,   // 10 minutos
 ```
-- **Razón**: Balance entre datos frescos y performance
+- **Razón**: Balance entre datos frescos y rendimiento
 
-### 3. Image Optimization
+### 3. Optimización de Imágenes
 - **Decisión**: Usar resizeMode="cover"
 - **Razón**: Consistencia visual en avatares
 
@@ -230,7 +251,7 @@ npx prettier --write src/
 ### Variables de Entorno
 La aplicación utiliza la API pública de GitHub, por lo que no requiere configuración adicional de variables de entorno.
 
-### API Endpoints Utilizados
+### Endpoints de API Utilizados
 - `GET /users` - Lista inicial de usuarios
 - `GET /search/users?q={term}` - Búsqueda de usuarios
 - `GET /users/{username}` - Detalles de usuario específico
@@ -273,51 +294,52 @@ const styles = StyleSheet.create({
 - Usar `StyleSheet.create()` para todos los estilos
 - Nombres descriptivos para las clases
 - Colores consistentes (paleta de GitHub)
-- Responsive design con `Dimensions`
+- Diseño responsivo con `Dimensions`
 
 ## 📊 Decisiones de Desarrollo
 
 ### Arquitectura
 - **Separación de responsabilidades**: Componentes, servicios y hooks bien separados
-- **Context API**: Para estado global de favoritos
+- **Context API**: Para estado global de favoritos y tema
 - **React Query**: Para gestión de estado del servidor y cache
-- **TypeScript**: Para tipado estático y mejor DX
+- **TypeScript**: Para tipado estático y mejor experiencia de desarrollo
 
-### Performance
-- **Debounce en búsqueda**: 500ms para evitar requests excesivos
+### Rendimiento
+- **Debounce en búsqueda**: 500ms para evitar peticiones excesivas
 - **FlatList optimizada**: Configuración de renderizado eficiente
 - **Cache de React Query**: Configuración de staleTime y gcTime
-- **Lazy loading**: Componentes cargados bajo demanda
+- **Carga diferida**: Componentes cargados bajo demanda
 
 ### UX/UI
-- **Estados de carga**: Indicadores visuales durante requests
+- **Estados de carga**: Indicadores visuales durante peticiones
 - **Manejo de errores**: Mensajes claros y opción de reintentar
 - **Diseño consistente**: Paleta de colores de GitHub
-- **Navegación intuitiva**: Tabs y navegación por stack
+- **Navegación intuitiva**: Pestañas y navegación por stack
 - **Íconos profesionales**: Sistema unificado de íconos vectoriales
+- **Sistema de temas**: Soporte para modo claro y oscuro
 
 ### Persistencia
-- **AsyncStorage**: Para favoritos locales
+- **AsyncStorage**: Para favoritos y tema locales
 - **React Query**: Para cache de datos de API
-- **Sincronización**: Estado local sincronizado con storage
+- **Sincronización**: Estado local sincronizado con almacenamiento
 
-## 🔒 Security Considerations
+## 🔒 Consideraciones de Seguridad
 
-### 1. API Calls
+### 1. Llamadas a API
 - **Decisión**: Usar API pública de GitHub
 - **Razón**:
   - No requiere autenticación
-  - Rate limiting manejado por GitHub
-  - Simplicidad para el demo
+  - Límite de velocidad manejado por GitHub
+  - Simplicidad para la demostración
 
-### 2. Data Storage
-- **Decisión**: AsyncStorage para favoritos
+### 2. Almacenamiento de Datos
+- **Decisión**: AsyncStorage para favoritos y tema
 - **Razón**:
   - Datos locales únicamente
   - No información sensible
   - Persistencia simple
 
-## 🚀 Deployment Strategy
+## 🚀 Estrategia de Despliegue
 
 ### 1. Expo EAS Build
 - **Decisión**: Usar EAS Build
@@ -326,12 +348,12 @@ const styles = StyleSheet.create({
   - No requiere macOS para iOS
   - Integración con Expo
 
-### 2. Environment Configuration
+### 2. Configuración de Entorno
 - **Decisión**: Sin variables de entorno
 - **Razón**:
   - API pública
   - Configuración simple
-  - Fácil setup
+  - Fácil configuración
 
 ### Expo
 ```bash
@@ -356,27 +378,27 @@ eas build --platform android
 eas build --platform ios
 ```
 
-## 🔄 Future Considerations
+## 🔄 Consideraciones Futuras
 
-### 1. Scalability
+### 1. Escalabilidad
 - **Consideraciones**:
   - Migrar a Redux/Zustand si el estado crece
-  - Implementar lazy loading para imágenes
-  - Agregar infinite scroll
+  - Implementar carga diferida para imágenes
+  - Agregar scroll infinito
 
-### 2. Features
+### 2. Funcionalidades
 - **Consideraciones**:
   - Autenticación con GitHub
   - Notificaciones push
-  - Offline support
-  - Dark mode
+  - Soporte offline
+  - Modo oscuro (ya implementado)
 
-### 3. Performance
+### 3. Rendimiento
 - **Consideraciones**:
   - Implementar virtualización para listas grandes
-  - Lazy loading de componentes
-  - Code splitting
-  - Bundle optimization
+  - Carga diferida de componentes
+  - División de código
+  - Optimización de bundle
 
 ## 📚 Recursos
 
