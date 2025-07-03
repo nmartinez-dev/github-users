@@ -92,13 +92,12 @@ export const HomeScreen: FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <StatusBar 
-        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'} 
-        backgroundColor={theme.colors.background} 
+      <StatusBar
+        barStyle={theme.type === 'light' ? 'dark-content' : 'light-content'}
+        backgroundColor={theme.colors.background}
       />
       <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <View style={styles.headerContent}>
-          <View style={styles.headerLeft} />
           <View style={styles.headerCenter}>
             <SearchBar onSearch={handleSearch} />
           </View>
@@ -127,15 +126,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
   },
-  headerLeft: {
-    width: 40,
-  },
   headerCenter: {
     flex: 1,
   },
   headerRight: {
     width: 40,
-    alignItems: 'flex-end',
+    marginLeft: 16,
   },
   content: {
     flex: 1,

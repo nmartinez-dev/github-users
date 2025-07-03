@@ -40,7 +40,7 @@ export const SearchBar: FC<SearchBarProps> = ({
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
       <View style={[styles.searchContainer, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
         <TextInput
           style={[styles.input, { color: theme.colors.text }]}
