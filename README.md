@@ -5,7 +5,7 @@ Una aplicación móvil desarrollada con React Native que permite explorar usuari
 ## 🚀 Características
 
 - **Listado de Usuarios**: Muestra una lista inicial de usuarios de GitHub
-- **Búsqueda en Tiempo Real**: Busca usuarios por nombre con debounce de 500ms
+- **Búsqueda en Tiempo Real**: Busca usuarios por nombre
 - **Sistema de Favoritos**: Marca/desmarca usuarios como favoritos con persistencia local
 - **Detalles de Usuario**: Vista detallada con información completa del usuario
 - **Navegación Intuitiva**: Navegación entre pantallas con React Navigation
@@ -46,8 +46,8 @@ Una aplicación móvil desarrollada con React Native que permite explorar usuari
 ## 🚀 Instalación y Configuración
 
 ### Prerrequisitos
-- Node.js (versión 16 o superior)
-- npm o yarn
+- Node.js (versión 22)
+- npm
 - Expo CLI (`npm install -g @expo/cli`)
 
 ### Pasos de Instalación
@@ -65,26 +65,12 @@ Una aplicación móvil desarrollada con React Native que permite explorar usuari
 
 3. **Ejecutar la aplicación**
    ```bash
-   # Para desarrollo web
-   npm run web
-   
-   # Para Android
-   npm run android
-   
-   # Para iOS (requiere macOS)
-   npm run ios
+   npm start   
    ```
 
 4. **Ejecutar tests**
    ```bash
-   # Ejecutar todos los tests
-   npm test
-   
-   # Ejecutar tests en modo watch
-   npm run test:watch
-   
-   # Ejecutar tests con cobertura
-   npm run test:coverage
+   npm test   
    ```
 
 ## 📁 Estructura del Proyecto
@@ -289,68 +275,6 @@ const styles = StyleSheet.create({
 - Colores consistentes (paleta de GitHub)
 - Responsive design con `Dimensions`
 
-## 🔄 Flujo de Desarrollo
-
-### 1. Crear una Nueva Feature
-```bash
-git checkout -b feature/nueva-funcionalidad
-```
-
-### 2. Desarrollo
-- Crear componentes en `src/components/`
-- Crear pantallas en `src/screens/`
-- Agregar tipos en `src/types/`
-- Crear tests en `__tests__/`
-
-### 3. Testing
-```bash
-npm test
-```
-
-### 4. Commit
-```bash
-git add .
-git commit -m "feat: agregar nueva funcionalidad"
-```
-
-### 5. Push y PR
-```bash
-git push origin feature/nueva-funcionalidad
-# Crear Pull Request
-```
-
-## 🧪 Testing
-
-### Estructura de Tests
-```typescript
-import { render, fireEvent } from '@testing-library/react-native';
-import { Component } from '../Component';
-
-describe('Component', () => {
-  it('should render correctly', () => {
-    const { getByText } = render(<Component />);
-    expect(getByText('Expected Text')).toBeTruthy();
-  });
-});
-```
-
-### Mocks Disponibles
-- AsyncStorage
-- react-native-screens
-- react-native-safe-area-context
-- expo-status-bar
-
-### Cobertura Mínima
-- Branches: 70%
-- Functions: 70%
-- Lines: 70%
-- Statements: 70%
-
-### Ejecutar Tests
-```bash
-npm test
-```
-
 ## 📊 Decisiones de Desarrollo
 
 ### Arquitectura
@@ -432,100 +356,6 @@ eas build --platform android
 eas build --platform ios
 ```
 
-## 🔍 Debugging
-
-### React Query DevTools
-```typescript
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-// En desarrollo
-{__DEV__ && <ReactQueryDevtools />}
-```
-
-### Console Logging
-```typescript
-// Para debugging
-console.log('Debug info:', data);
-
-// Para errores
-console.error('Error:', error);
-```
-
-### React Native Debugger
-- Instalar React Native Debugger
-- Conectar con la app en desarrollo
-- Inspeccionar estado y props
-
-## 📱 Platform Specific
-
-### Android
-- Usar `Platform.OS === 'android'` para código específico
-- Considerar diferentes densidades de pantalla
-- Testear en diferentes versiones de Android
-
-### iOS
-- Usar `Platform.OS === 'ios'` para código específico
-- Considerar Safe Area
-- Testear en diferentes tamaños de iPhone
-
-### Web
-- Usar `Platform.OS === 'web'` para código específico
-- Considerar responsive design
-- Testear en diferentes navegadores
-
-## 🔧 Troubleshooting
-
-### Errores Comunes
-
-#### Metro Bundler Issues
-```bash
-# Limpiar cache
-npx expo start --clear
-
-# Reset cache
-npx expo start -c
-```
-
-#### TypeScript Errors
-```bash
-# Verificar tipos
-npx tsc --noEmit
-
-# Rebuild
-npx tsc --build --clean
-```
-
-#### Testing Issues
-```bash
-# Limpiar cache de Jest
-npm test -- --clearCache
-
-# Reset mocks
-jest.resetAllMocks();
-```
-
-### Performance Issues
-- Usar `React.memo()` para componentes pesados
-- Implementar `useMemo()` y `useCallback()`
-- Optimizar FlatList con `getItemLayout`
-- Usar `InteractionManager` para tareas pesadas
-
-## 📊 Monitoring & Analytics
-
-### 1. Error Tracking
-- **Decisión**: Console logging básico
-- **Razón**:
-  - Simplicidad para el demo
-  - Fácil debugging
-  - No dependencias externas
-
-### 2. Performance Monitoring
-- **Decisión**: React Query DevTools
-- **Razón**:
-  - Debugging de queries
-  - Monitoreo de cache
-  - Herramientas integradas
-
 ## 🔄 Future Considerations
 
 ### 1. Scalability
@@ -565,23 +395,3 @@ jest.resetAllMocks();
 - [React Native Community](https://github.com/react-native-community)
 - [Expo Discord](https://discord.gg/expo)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/react-native)
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 👨‍💻 Autor
-
-Desarrollado como parte de un challenge técnico para demostrar habilidades en React Native, TypeScript y desarrollo móvil.
-
----
-
-**Nota**: Esta aplicación utiliza la API pública de GitHub. Para uso en producción con alto tráfico, considera implementar autenticación y rate limiting apropiados.
