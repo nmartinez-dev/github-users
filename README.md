@@ -78,38 +78,76 @@ Una aplicación móvil desarrollada con React Native que permite explorar usuari
 
 ```
 src/
-├── components/          # Componentes reutilizables
-│   ├── UserCard.tsx     # Tarjeta de usuario
-│   ├── SearchBar.tsx    # Barra de búsqueda
-│   ├── TabNavigator.tsx # Navegación por pestañas
-│   ├── ThemeToggle.tsx  # Toggle de tema
-│   ├── LoadingView.tsx  # Vista de carga
-│   ├── ErrorView.tsx    # Vista de error
-│   └── EmptyView.tsx    # Vista vacía
+├── components/          # Componentes reutilizables organizados por funcionalidad
+│   ├── user/            # Componentes relacionados con usuarios
+│   │   ├── UserCard.tsx         # Tarjeta de usuario
+│   │   ├── UserDetailHeader.tsx # Header de detalles de usuario
+│   │   ├── UserDetails.tsx      # Detalles del usuario
+│   │   ├── UserProfile.tsx      # Perfil del usuario (avatar, nombre, bio)
+│   │   └── UserStats.tsx        # Estadísticas del usuario
+│   ├── favorites/       # Componentes relacionados con favoritos
+│   │   ├── FavoritesHeader.tsx  # Header de favoritos con ordenamiento
+│   │   └── FavoritesList.tsx    # Lista de usuarios favoritos
+│   ├── common/          # Componentes comunes/reutilizables
+│   │   ├── SearchBar.tsx        # Barra de búsqueda
+│   │   ├── ThemeToggle.tsx      # Toggle de tema
+│   │   ├── LoadingView.tsx      # Vista de carga
+│   │   ├── ErrorView.tsx        # Vista de error
+│   │   └── EmptyView.tsx        # Vista vacía
+│   └── navigation/      # Componentes de navegación
+│       └── TabNavigator.tsx     # Navegación por pestañas
 ├── screens/             # Pantallas de la aplicación
-│   ├── MainScreen.tsx   # Pantalla principal con pestañas
-│   ├── HomeScreen.tsx   # Lista de usuarios
-│   ├── UserDetailScreen.tsx # Detalles del usuario
-│   └── FavoritesScreen.tsx # Lista de favoritos
+│   ├── MainScreen.tsx           # Pantalla principal con pestañas
+│   ├── HomeScreen.tsx           # Lista de usuarios
+│   ├── UserDetailScreen.tsx     # Detalles del usuario
+│   └── FavoritesScreen.tsx      # Lista de favoritos
 ├── services/            # Servicios y APIs
-│   └── githubApi.ts     # Cliente de GitHub API
+│   └── githubApi.ts             # Cliente de GitHub API
 ├── hooks/               # Hooks personalizados
-│   └── useGitHubUsers.ts # Hooks para consultas de usuarios
+│   ├── useGitHubUsers.ts        # Hooks para consultas de usuarios
+│   ├── useFavoritesLogic.ts     # Lógica de favoritos
+│   └── useUserDetailLogic.ts    # Lógica de detalles de usuario
 ├── contexts/            # Contextos de React
-│   ├── FavoritesContext.tsx # Contexto de favoritos
-│   └── ThemeContext.tsx     # Contexto de tema
+│   ├── FavoritesContext.tsx     # Contexto de favoritos
+│   └── ThemeContext.tsx         # Contexto de tema
 ├── types/               # Definiciones de tipos TypeScript
-│   └── index.ts         # Interfaces y tipos
+│   └── index.ts                 # Interfaces y tipos
 ├── utils/               # Utilidades
-│   ├── dateUtils.ts     # Utilidades de fecha
-│   ├── icons.ts         # Configuración de íconos
-│   └── __tests__/       # Tests unitarios
+│   ├── dateUtils.ts             # Utilidades de fecha
+│   ├── icons.ts                 # Configuración de íconos
+│   └── __tests__/               # Tests unitarios
 └── __tests__/           # Tests adicionales
 ```
 
 ## 🏗️ Arquitectura y Decisiones Técnicas
 
-### 1. Estructura de Directorios
+### 1. Organización de Componentes
+**Decisión**: Agrupación de componentes por funcionalidad en subdirectorios
+**Razón**: 
+- Mejor organización y navegación del código
+- Facilita encontrar componentes específicos
+- Escalabilidad para proyectos grandes
+- Separación clara de responsabilidades
+
+#### Estructura de Componentes:
+- **`user/`**: Componentes específicos para mostrar información de usuarios
+- **`favorites/`**: Componentes para gestión de favoritos
+- **`common/`**: Componentes reutilizables en toda la aplicación
+- **`navigation/`**: Componentes relacionados con navegación
+
+### 2. Separación de Lógica de Negocio
+**Decisión**: Extracción de lógica compleja a hooks personalizados
+**Razón**:
+- Componentes más limpios y enfocados en UI
+- Lógica reutilizable entre componentes
+- Facilita testing de lógica de negocio
+- Mejor separación de responsabilidades
+
+#### Hooks Personalizados:
+- **`useFavoritesLogic`**: Maneja filtrado, ordenamiento y navegación de favoritos
+- **`useUserDetailLogic`**: Maneja navegación y estado de favoritos para detalles
+
+### 3. Estructura de Directorios
 **Decisión**: Separación clara de responsabilidades en directorios específicos
 **Razón**: Facilita el mantenimiento, escalabilidad y navegación del código
 
@@ -300,6 +338,8 @@ const styles = StyleSheet.create({
 
 ### Arquitectura
 - **Separación de responsabilidades**: Componentes, servicios y hooks bien separados
+- **Organización modular**: Componentes agrupados por funcionalidad en subdirectorios
+- **Lógica de negocio separada**: Hooks personalizados para lógica compleja
 - **Context API**: Para estado global de favoritos y tema
 - **React Query**: Para gestión de estado del servidor y cache
 - **TypeScript**: Para tipado estático y mejor experiencia de desarrollo
@@ -377,6 +417,20 @@ eas build:configure
 eas build --platform android
 eas build --platform ios
 ```
+
+## 🔄 Mejoras Implementadas
+
+### 1. Refactorización de Componentes
+- **Componentes divididos**: Pantallas grandes divididas en componentes más pequeños y reutilizables
+- **Separación de lógica**: Hooks personalizados para manejar lógica de negocio compleja
+- **Organización modular**: Componentes agrupados por funcionalidad en subdirectorios
+- **Mejor mantenibilidad**: Código más limpio y fácil de mantener
+
+### 2. Beneficios de la Refactorización
+- **Reutilización**: Componentes pueden ser reutilizados en otras partes de la aplicación
+- **Testabilidad**: Cada componente puede ser testeado de forma independiente
+- **Legibilidad**: Código más fácil de entender y navegar
+- **Escalabilidad**: Facilita agregar nuevas funcionalidades
 
 ## 🔄 Consideraciones Futuras
 
