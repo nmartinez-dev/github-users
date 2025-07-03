@@ -30,12 +30,14 @@ export const UserCard: FC<UserCardProps> = ({
 
   return (
     <TouchableOpacity
+      testID="user-card"
       style={[styles.container, { backgroundColor: theme.colors.card, borderColor: theme.colors.border }]}
       onPress={onPress}
       activeOpacity={0.7}
     >
       <View style={styles.content}>
         <Image
+          testID="user-avatar"
           source={{ uri: user.avatar_url }}
           style={styles.avatar}
           resizeMode="cover"
@@ -58,6 +60,7 @@ export const UserCard: FC<UserCardProps> = ({
 
         {showFavoriteButton && (
           <TouchableOpacity
+            testID="favorite-button"
             style={styles.favoriteButton}
             onPress={handleFavoritePress}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}

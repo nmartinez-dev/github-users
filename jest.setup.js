@@ -6,8 +6,10 @@ jest.mock('react-native', () => ({
   TouchableOpacity: 'TouchableOpacity',
   FlatList: 'FlatList',
   Image: 'Image',
+  TextInput: 'TextInput',
   StyleSheet: {
     create: (styles) => styles,
+    flatten: (style) => style,
   },
   Dimensions: {
     get: () => ({ width: 375, height: 667 }),

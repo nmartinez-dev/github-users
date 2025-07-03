@@ -54,6 +54,7 @@ export const SearchBar: FC<SearchBarProps> = ({
         />
         {query.length > 0 && (
           <TouchableOpacity
+            testID="clear-button"
             style={styles.clearButton}
             onPress={handleClear}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
